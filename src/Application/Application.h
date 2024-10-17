@@ -1,5 +1,5 @@
-#ifndef APPLICATION_APPLICATION_
-#define APPLICATION_APPLICATION_
+#ifndef APPLICATION_APPLICATION_H_
+#define APPLICATION_APPLICATION_H_
 
 #include <string>
 
@@ -20,4 +20,4 @@ namespace http_server {
     };
 }
 
-#endif // APPLICATION_APPLICATION_
+#endif // APPLICATION_APPLICATION_H_
