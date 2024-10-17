@@ -4,7 +4,7 @@
 #include <string>
 
 namespace http_server {
-    class Server {
+    class HttpServer {
         std::string addr;
         int port;
     };
