@@ -1,7 +1,0 @@
- INFO: nweb starting:8000:57374
- INFO: nweb starting:8000:57441
-ERROR: system call:bind Errno=98 exiting pid=57441
- INFO: request:GET / HTTP/1.1**Host: 127.0.0.1:8000**User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0**Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8**Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3**Accept-Encoding: gzip, deflate, br, zstd**Connection: keep-alive**Upgrade-Insecure-Requests: 1**Sec-Fetch-Dest: document**Sec-Fetch-Mode: navigate**Sec-Fetch-Site: none**Sec-Fetch-User: ?1**Priority: u=0, i****:1
-NOT FOUND: failed to open file:index.html
- INFO: request:GET /favicon.ico HTTP/1.1**Host: 127.0.0.1:8000**User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0**Accept: image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5**Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3**Accept-Encoding: gzip, deflate, br, zstd**Connection: keep-alive**Referer: http://127.0.0.1:8000/**Sec-Fetch-Dest: image**Sec-Fetch-Mode: no-cors**Sec-Fetch-Site: same-origin**Priority: u=6****:2
-NOT FOUND: failed to open file:favicon.ico
