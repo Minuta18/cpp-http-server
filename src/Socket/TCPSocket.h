@@ -27,6 +27,8 @@ namespace http_server {
         std::string get_ip();
         std::string get_port();
 
+        void proceed();
+
         TCPSocket& operator=(const TCPSocket& other);
     };
 }

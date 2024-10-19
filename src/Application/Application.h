@@ -2,20 +2,22 @@
 #define APPLICATION_APPLICATION_H_
 
 #include <string>
+#include "../Utils/Consts.h"
+#include "../Server/HttpServer.h"
 
 namespace http_server {
-    const std::string DEFAULT_IP = "127.0.0.1";
-    const int DEFAULT_PORT = 8000;
-    const std::string DEFAULT_PORT_STR = "8000";
-
     class Application {
         std::string ip;
         int port;
+
+        HttpServer* server;
     public:
         Application();
-        Application(std::string ip, int port);
+        Application(const std::string& ip, int port);
         Application(const Application& other);
         ~Application();
+
+        void run();
 
         Application& operator=(const Application& other);
     };

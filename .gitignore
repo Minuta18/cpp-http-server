@@ -5,3 +5,4 @@ Main
 Makefile
 build
 .vscode
+*.a
