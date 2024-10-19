@@ -2,16 +2,17 @@
 #define __UTILS_EXC_Р_
 
 #include <exception>
+#include <string>
 
 namespace http_server {
     class SocketException : public std::exception {
-        char* message;
+        std::string message;
     public:
         SocketException() : message("Socket exception") {}
-        SocketException(char* msg) : message(msg) {}
+        SocketException(std::string msg) : message(msg) {}
 
-        char* what() {
-            return message;
+        const char* what() {
+            return message.c_str();
         }
     };
 }
