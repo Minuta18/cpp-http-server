@@ -9,17 +9,17 @@
 #include <iostream>
 #include <functional>
 
-namespace http_server {
-    typedef std::function<std::string(int)> tcp_socket_reply_handler;
+#include "ISocket.h"
 
-    class TCPSocket {
+namespace http_server {
+    class TCPSocket : ISocket {
         std::string ip;
         std::string port;
 
         int server_socket;
         addrinfo* server_addr;
         sockaddr_storage connections;
-        tcp_socket_reply_handler reply_handler;
+        socket_reply_handler reply_handler;
 
         void setup_connection();
     public:
@@ -30,9 +30,8 @@ namespace http_server {
 
         std::string get_ip();
         std::string get_port();
-        tcp_socket_reply_handler get_reply_handler();
-        void set_reply_handler(tcp_socket_reply_handler handler);
-
+        socket_reply_handler get_reply_handler();
+        void set_reply_handler(socket_reply_handler handler);
         void proceed();
 
         TCPSocket& operator=(const TCPSocket& other);

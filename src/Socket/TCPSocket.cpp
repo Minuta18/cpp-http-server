@@ -119,11 +119,11 @@ namespace http_server {
     std::string TCPSocket::get_ip() { return this->ip; }
     std::string TCPSocket::get_port() { return this->port; }
 
-    tcp_socket_reply_handler TCPSocket::get_reply_handler() { 
+    socket_reply_handler TCPSocket::get_reply_handler() { 
         return this->reply_handler; 
     }
 
-    void TCPSocket::set_reply_handler(tcp_socket_reply_handler handler) {
+    void TCPSocket::set_reply_handler(socket_reply_handler handler) {
         reply_handler = handler;
     }
 
