@@ -3,7 +3,7 @@
 
 #include <string>
 
-#define ENUM_STR inline static const std::string 
+#include "../Utils/Macros.h"
 
 namespace http_server {
     // Its enum, trust me
