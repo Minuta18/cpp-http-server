@@ -21,6 +21,12 @@ void* get_in_addr(sockaddr* sa) {
     return &(((sockaddr_in6*) sa)->sin6_addr);
 }
 
+std::string default_reply_handler(int conn) {
+    return "HTTP/1.1 200 OK\nServer: CppHttpServer\n"
+        "Content-Type: text/html\nContent-Length: 48\n\n" 
+        "<h1>200 OK</h1><p>No additional data given.</p>\n";
+}
+
 namespace http_server {
     void TCPSocket::setup_connection() {
         addrinfo hints;
@@ -29,7 +35,8 @@ namespace http_server {
         hints.ai_socktype = SOCK_STREAM;
         hints.ai_flags = AI_PASSIVE;
 
-        int addr_res = getaddrinfo(NULL, port.c_str(), &hints, &server_addr);
+        int addr_res = getaddrinfo(
+            ip.c_str(), port.c_str(), &hints, &server_addr);
         if (addr_res != 0) {
             std::cerr << "getaddrinfo: " << gai_strerror(addr_res) 
                 << std::endl;
@@ -38,7 +45,6 @@ namespace http_server {
 
         addrinfo *p;
         for (p = server_addr; p != nullptr; p = p->ai_next) {
-            std::cout << "Trying to bind " << p->ai_canonname << std::endl;
             server_socket = socket(
                 p->ai_family, p->ai_socktype, p->ai_protocol);
             if (server_socket == -1) {
@@ -60,6 +66,8 @@ namespace http_server {
                 std::cerr << "server: bind failed" << std::endl;
                 continue;
             }
+
+            break;
         }
 
         if (p == nullptr) {
@@ -84,17 +92,24 @@ namespace http_server {
         std::cout << "server: waiting for connections..." << std::endl;
     }
 
-    TCPSocket::TCPSocket() : ip(DEFAULT_IP), port(DEFAULT_PORT_STR) {}
+    TCPSocket::TCPSocket() : ip(DEFAULT_IP), port(DEFAULT_PORT_STR), 
+        reply_handler(default_reply_handler) 
+    { 
+        setup_connection(); 
+    }
     
     TCPSocket::TCPSocket(
         const std::string& ip, const int port
-    ) : ip(ip) {
+    ) : ip(ip), reply_handler(default_reply_handler) {
         this->port = std::to_string(port);
+        setup_connection(); 
     }
     
     TCPSocket::TCPSocket(const TCPSocket& other) {
         this->ip = other.ip;
         this->port = other.port;
+        this->reply_handler = other.reply_handler;
+        setup_connection(); 
     }
     
     TCPSocket::~TCPSocket() {
@@ -103,6 +118,14 @@ namespace http_server {
 
     std::string TCPSocket::get_ip() { return this->ip; }
     std::string TCPSocket::get_port() { return this->port; }
+
+    tcp_socket_reply_handler TCPSocket::get_reply_handler() { 
+        return this->reply_handler; 
+    }
+
+    void TCPSocket::set_reply_handler(tcp_socket_reply_handler handler) {
+        reply_handler = handler;
+    }
 
     void TCPSocket::proceed() {
         socklen_t sin_size = sizeof connections;
@@ -120,10 +143,8 @@ namespace http_server {
 
         if (!fork()) {
             close(server_socket);
-            if (send(conn, 
-                "HTTP/1.1 200 OK\nServer: CppHttpServer\n"
-                "Content-Type: text/html\nContent-Length: 23\n\n" 
-                "<h1>Hello, world!</h1>\n", 106, 0) == -1) {
+            std::string msg = reply_handler(conn);
+            if (send(conn, msg.c_str(), msg.size(), 0) == -1) {
                 std::cerr << "server: send failed" << std::endl;
             }
             close(conn);
@@ -137,6 +158,7 @@ namespace http_server {
         if (this != &other) {
             this->ip = other.ip;
             this->port = other.port;
+            this->reply_handler = other.reply_handler;
         }
         return *this;
     }
