@@ -8,6 +8,7 @@ namespace http_server {
     typedef std::unordered_map<std::string, std::string> HeaderList; 
 
     class HttpRequest {
+        void parse_and_write_to_this(const std::string& request);
     public:
         std::string method;
         std::string uri;
@@ -22,8 +23,8 @@ namespace http_server {
 
         HttpRequest& operator=(const HttpRequest& other);
 
-        static HttpRequest parse(const std::string& request);
+        static HttpRequest* parse(const std::string& request);
     };
 }
 
-#endif // __REQUESTS_REQUESTS_H_
+#endif // __REQUESTS_REQUESTS_H

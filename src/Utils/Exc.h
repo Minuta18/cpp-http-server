@@ -15,6 +15,17 @@ namespace http_server {
             return message.c_str();
         }
     };
+
+    class HttpException : public std::exception {
+        std::string message;
+    public:
+        HttpException() : message("Http exception") {}
+        HttpException(std::string msg) : message(msg) {}
+
+        const char* what() {
+            return message.c_str();
+        }
+    };
 }
 
 #endif // __UTILS_EXC_Р_

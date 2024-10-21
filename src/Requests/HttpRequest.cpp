@@ -1,8 +1,15 @@
 #include "HttpRequest.h"
 #include "Methods.h"
 #include "Protocols.h"
+#include "../Utils/Exc.h"
 
 namespace http_server {
+    void HttpRequest::parse_and_write_to_this(
+        const std::string& request
+    ) {
+        // Parsing will be there
+    }
+
     HttpRequest::HttpRequest() : method(HttpMethod::GET), uri("/"), 
         protocol(HttpVersion::V2_0), body("") {}
 
@@ -15,7 +22,7 @@ namespace http_server {
     }
 
     HttpRequest::HttpRequest(const std::string& request) {
-        *this = HttpRequest::parse(request);
+        parse_and_write_to_this(request);
     }
 
     HttpRequest& HttpRequest::operator=(const HttpRequest& other) {
@@ -30,6 +37,6 @@ namespace http_server {
     }
 
     static HttpRequest parse(const std::string& request) {
-        
+        return HttpRequest(request);
     }
 }
