@@ -105,13 +105,6 @@ namespace http_server {
         setup_connection(); 
     }
     
-    TCPSocket::TCPSocket(const TCPSocket& other) {
-        this->ip = other.ip;
-        this->port = other.port;
-        this->reply_handler = other.reply_handler;
-        setup_connection(); 
-    }
-    
     TCPSocket::~TCPSocket() {
         freeaddrinfo(server_addr);
     };
@@ -152,14 +145,5 @@ namespace http_server {
         }
 
         close(conn);
-    }
-
-    TCPSocket& TCPSocket::operator=(const TCPSocket& other) {
-        if (this != &other) {
-            this->ip = other.ip;
-            this->port = other.port;
-            this->reply_handler = other.reply_handler;
-        }
-        return *this;
     }
 }

@@ -25,7 +25,7 @@ namespace http_server {
     public:
         TCPSocket();
         TCPSocket(const std::string& ip, const int port);
-        TCPSocket(const TCPSocket& other);
+        TCPSocket(const TCPSocket& other) = delete;
         ~TCPSocket();
 
         std::string get_ip();
@@ -34,7 +34,7 @@ namespace http_server {
         void set_reply_handler(socket_reply_handler handler);
         void proceed();
 
-        TCPSocket& operator=(const TCPSocket& other);
+        TCPSocket& operator=(const TCPSocket& other) = delete;
     };
 }
 
